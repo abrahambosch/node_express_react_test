@@ -1,0 +1,15 @@
+body { padding: 0 0 0 0; margin: 0 0 0 0; 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+.theme-l4 {color:#000; background-color:#dfe5e8 }
+.theme-d4 {color:#fff; background-color:#3a4b53 }
+.card { box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+    padding: 0.01em 16px; margin-top: 16px; margin-bottom: 16px;
+    color: #000; background-color: #fff; position: relative; }
+.container { max-width: 600px; min-width: 400px; margin: 40px auto; }
+.display-topright { position: absolute; right: 0; top: 0; }
+.padding { padding: 8px 16px; }
+.large { font-size: 18px; }
+.bar { width: 100%; overflow: hidden; padding: 5px 20px; }
+.query-form input { font-size: 24pt; max-width: 100%; padding: 5px 15px; }
+.media img { max-height: 120px; }
+.date { font-style: italic; font-size: 9pt; }
+.hide {  display: none; }
