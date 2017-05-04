@@ -1,6 +1,6 @@
 # Express, React, Babel, Webpack Test Project
-Author: Abraham Bosch <abrahambosch@gmail.com>
-About: This is a tinker project to demonstrate how Nodejs, Express, React with Babel and Webpack work. 
+- Author: Abraham Bosch <abrahambosch@gmail.com>
+- About: This is a tinker project to demonstrate how Nodejs, Express, React with Babel and Webpack work. 
 
 This project includes the following:
                 
