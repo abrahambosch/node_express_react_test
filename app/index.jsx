@@ -11,9 +11,6 @@ class App extends React.Component {
     }
 }
 
-render(<App/>, document.getElementById('app'));
-
-
 
 function Card(props) {
     return (<div className={props.card.wrapperClassName}>
@@ -38,7 +35,8 @@ var thefeed = [
 class Feed extends React.Component {
     constructor() {
         super();
-        this.url = 'https://queryfeed.net/twitter';
+        //this.url = 'https://queryfeed.net/twitter';
+        this.url = 'http://localhost:8080/cards';
         this.state = {
             search: 'javascript',
             cards: thefeed
@@ -58,38 +56,38 @@ class Feed extends React.Component {
     }
 
     loadDataFromServer() {
+        var self = this;
         return axios({
             method: 'get',
             url: this.url,
             data: {q: this.state.search},
         }).then(function(response){
-            console.log(response);
-            this.updateStateData(response);
+            console.log("loadDataFromServer success", response);
+            self.updateStateData(response.data);
             //this.setState({data: data});
         }).catch(function (response) {
-            console.log(response);
+            console.log("loadDataFromServer fail", response);
         });
     }
     componentDidMount() {
         this.loadDataFromServer();
         //setInterval(this.loadDataFromServer, this.props.pollInterval);
     }
-    handleDataSubmit(search) {
+    handleDataSubmit(e, search) {
         const state = this.state.slice();
         state.search = search;
         this.setState(state);
         this.loadDataFromServer();
     }
 
-    updateStateData(xml) {
+    updateStateData(data) {
         const state = this.state.slice();
-        state.cards = this.transformXmlToCards(xml);
+        state.cards = this.transformOutputToCards(data);
         this.setState(state);
     }
 
-    transformXmlToCards(xml) {
-        let json = [];
-        return json;
+    transformOutputToCards(data) {
+        return data.cards;
     }
 
     listCards() {
@@ -102,7 +100,7 @@ class Feed extends React.Component {
             <div>
                 <div>
                     <form className="query-form">
-                        <input type="text" className="query" name="query" defaultValue={this.state.search} onSubmit={this.handleSubmit}/>
+                        <input type="text" className="query" name="query" defaultValue={this.state.search} onSubmit={this.handleDataSubmit}/>
                     </form>
                 </div>
                 <div className="feed">
@@ -112,3 +110,9 @@ class Feed extends React.Component {
         );
     }
 }
+
+
+
+render(<App/>, document.getElementById('app'));
+
+render(<Feed/>, document.getElementById('feedCards'));

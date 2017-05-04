@@ -8,13 +8,12 @@ function MyFeed() {}
 var MyFeed = {
     constructor: MyFeed,
     json: {},
-    //url: 'https://queryfeed.net/twitter',
-    url: '/feed',
+    url: 'https://queryfeed.net/twitter',
 
     getCards: function(search, callback, failCallback) {
         var self = this;
         self.loadDataFromServer(search, 'json', function(json){
-            callback(self.getCardsFromJson(json));
+            callback({cards: self.getCardsFromJson(json)});
         }, function(error){
             failCallback(error);
         });

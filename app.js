@@ -17,8 +17,7 @@ app.get('/', function (req, res) {
 })
 
 app.get('/feed', function (req, res) {
-    var acceptsJSON = req.accepts('json'),
-        format = acceptsJSON == 'json'?'json':'xml';
+    var format = req.accepts('json') == 'json'?'json':'xml';
 
     MyFeed.loadDataFromServer('javascript', format, function(output){
         if (format == 'json') {
