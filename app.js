@@ -18,31 +18,40 @@ app.get('/', function (req, res) {
 
 app.get('/feed', function (req, res) {
     var format = req.accepts('json') == 'json'?'json':'xml';
-
-    MyFeed.loadDataFromServer('javascript', format, function(output){
-        if (format == 'json') {
-            res.setHeader('Content-Type', 'application/json');
-            res.send(JSON.stringify(output));
-        }
-        else {
-            res.setHeader('Content-Type', 'application/rss+xml');
-            res.send(output);
-        }
-        //res.send(JSON.stringify(json));
+    if (typeof req.query.q == 'undefined') {
+        return res.status(400).send('query paramerer "q" is missing. ');
+    }
+    MyFeed.getFeed(req.query.q, function(output){
+        res.format({
+            'application/json': function(){
+                MyFeed.parseXml(output, function (json){
+                    res.json(json);
+                });
+            },
+            'default': function() {     // default to xml
+                // log the request and respond with 406
+                //res.status(406).send('Not Acceptable');
+                res.setHeader('Content-Type', 'application/rss+xml');
+                res.send(output);
+            }
+        })
 
     }, function(error){
-        res.send('Got an Error' + error);
+        res.status(400).send('Got an Error' + error);
     })
 
 })
 
 app.get('/cards', function (req, res) {
-    MyFeed.getCards('javascript', function(cards){
-        res.setHeader('Content-Type', 'application/json');
+    if (typeof req.query.q == 'undefined') {
+        return res.status(400).send('query paramerer "q" is missing. ');
+    }
+    MyFeed.getCards(req.query.q, function(cards){
+        //res.setHeader('Content-Type', 'application/json');
         //res.send(JSON.stringify(json));
-        res.send(JSON.stringify(cards));
+        res.json(JSON.stringify(cards));
     }, function(error){
-        res.send('Got an Error' + error);
+        res.status(400).send('Got an Error' + error);
     })
 
 })

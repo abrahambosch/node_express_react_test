@@ -13,3 +13,7 @@ body { padding: 0 0 0 0; margin: 0 0 0 0; 	font-family: "Helvetica Neue", Helvet
 .media img { max-height: 120px; }
 .date { font-style: italic; font-size: 9pt; }
 .hide {  display: none; }
+.greeting {     margin: 40px 40px; background-color: #eeeeee;  padding: 30px; }
+.greeting .title {      font-size: 40px;  margin: 0 0 20px; }
+.greeting .description { margin: 0 20px; font-size: 14px; }
+.seperator { margin: 50px 0; border-bottom: 1px solid black; }
