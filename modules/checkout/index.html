@@ -1,0 +1,105 @@
+<html>
+<head>
+    <script type="text/javascript">
+        function onVisaCheckoutReady(){
+            V.init( {
+                apikey: "8M8WFYFCWD1YGWB6JBM821fHNeK2_cfGY0AamRfKCZU6egn4I",
+                paymentRequest:{
+                    currencyCode: "USD",
+                    total: "10.00"
+                }
+            });
+            V.on("payment.success", function(payment) {
+                console.log("success", payment);
+                //alert(JSON.stringify(payment));
+                axios.get('/checkout/getPaymentData?callId=' + payment.callid)
+                    .then(function (response) {
+                        console.log(response);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            });
+            V.on("payment.cancel", function(payment) {
+                console.log("cancel", payment);
+                //alert(JSON.stringify(payment));
+            });
+            V.on("payment.error", function(payment, error) {
+                console.log("error", payment);
+                //alert(JSON.stringify(error));
+            });
+        }
+    </script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<img alt="Visa Checkout" class="v-button" role="button"
+     src="https://sandbox.secure.checkout.visa.com/wallet-services-web/xo/button.png"/>
+<script type="text/javascript"
+        src="https://sandbox-assets.secure.checkout.visa.com/checkout-widget/resources/js/integration/v1/sdk.js">
+</script>
+
+<script>
+
+    var sampleVisaPaymentSuccess = {
+        "newUser": true,
+        "threeDSRequired": false,
+        "riskDecision": "ALLOW",
+        "partialShippingAddress": {"countryCode": "US", "postalCode": "92660"},
+        "partialPaymentInstrument": {"lastFourDigits": "1111", "paymentType": {"cardBrand": "VISA"}},
+        "encPaymentData": "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",
+        "encKey": "u/WEYMEtq9y2mbA3g3DEja6DCHMO9AsGrgO4vJoGuEwpsxZnEt8OatQaHhbRlYMoqvG7DepjRzSON4gai0Pu61VwUQnlomG+6doeQneqoI53KTj+jpKp63EGtU1IbYTN",
+        "paymentInstrument": [],
+        "shippingAddress": [],
+        "cardArt": {},
+        "callid": "7185266763714195201",
+        "vInitRequest": {
+            "apikey": "8M8WFYFCWD1YGWB6JBM821fHNeK2_cfGY0AamRfKCZU6egn4I",
+            "paymentRequest": {"currencyCode": "USD", "total": "10.00"},
+            "parentUrl": "http://localhost:8080/checkout.html",
+            "settings": {
+                "widgetStyle": "OVERLAY",
+                "buttonPosition": "RELATIVE",
+                "shipping": {"collectShipping": "true"},
+                "payment": {}
+            },
+            "browserLocale": "en_US",
+            "clientId": "ba37382d-901b-8898-ab37-1eec5634b201",
+            "allowEnrollment": true,
+            "allowCustomBranding": false,
+            "guestCheckout": false,
+            "currencyFormat": "currencyCode ###,###,###.##",
+            "displayName": "Merchant"
+        }
+    };
+
+    var sampleVisaPaymentCancel = {
+        "vInitRequest": {
+            "apikey": "8M8WFYFCWD1YGWB6JBM821fHNeK2_cfGY0AamRfKCZU6egn4I",
+            "paymentRequest": {"currencyCode": "USD", "total": "10.00"},
+            "parentUrl": "http://localhost:8080/checkout.html",
+            "settings": {
+                "widgetStyle": "OVERLAY",
+                "buttonPosition": "RELATIVE",
+                "shipping": {"collectShipping": "true"},
+                "payment": {}
+            },
+            "browserLocale": "en_US",
+            "clientId": "ba37382d-901b-8898-ab37-1eec5634b201",
+            "allowEnrollment": true,
+            "allowCustomBranding": false,
+            "guestCheckout": false,
+            "currencyFormat": "currencyCode ###,###,###.##",
+            "displayName": "Merchant"
+        }
+    };
+
+
+
+</script>
+
+
+
+
+</body>
+</html>

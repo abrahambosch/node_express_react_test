@@ -5,7 +5,12 @@ app.set('port', port);
 
 var MyFeed = require('./MyFeed.js');
 
-app.use(express.static('public'))
+app.use(express.static('public'));
+
+var checkout = require('./modules/checkout/router');
+
+app.use('/checkout', checkout);
+
 
 app.all('/secret', function (req, res, next) {
     console.log('Accessing the secret section ...')
@@ -55,6 +60,12 @@ app.get('/cards', function (req, res) {
     })
 
 })
+
+
+
+
+
+
 
 
 app.listen(port, function () {
