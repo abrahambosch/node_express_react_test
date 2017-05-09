@@ -8,7 +8,7 @@ import axios from 'axios';
 class Greeting extends React.Component {
     render () {
         return (<div>
-            <div className="title"> Hello RoadTrip Nation!</div>
+            <div className="title"> Hello Visitor!</div>
             <div className="description">
 
                 <p>This project includes the following:</p>
